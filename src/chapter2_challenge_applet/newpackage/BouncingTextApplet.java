@@ -1,60 +1,72 @@
-
 package chapter2_challenge_applet.newpackage;
-    import java.applet.Applet;
+
+import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 
 public class BouncingTextApplet extends Applet implements Runnable {
-    private Thread thread;
+
+    private Thread animationThread;
     private int x = 0;
-    private String text = "Tesfamikael Hailu";  // Replace with your actual name
+    private String name = "TESFAMIKAEL HAILU"; // Replace with your name
+    private int speed = 5;
     private boolean running = false;
+    private Image logo;
 
     @Override
     public void init() {
-        setSize(400, 100);
-        setBackground(Color.BLACK);
+        setSize(400, 200);
+        setBackground(Color.DARK_GRAY);
+
+        // Load the image from the same directory as the HTML file
+        logo = getImage(getDocumentBase(), "logo.png");
     }
 
     @Override
     public void start() {
-        if (thread == null || !running) {
+        if (animationThread == null) {
             running = true;
-            thread = new Thread(this);
-            thread.start();
+            animationThread = new Thread(this);
+            animationThread.start();
         }
     }
 
     @Override
     public void stop() {
         running = false;
-        thread = null;
+        animationThread = null;
     }
 
     @Override
     public void run() {
         while (running) {
-            x += 5;
+            x += speed;
             if (x > getWidth()) {
                 x = 0;
             }
-
             repaint();
 
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                // Handle exception
-                break;
+                // Handle interrupt
             }
         }
     }
 
     @Override
     public void paint(Graphics g) {
+        // Draw bouncing text
         g.setColor(Color.GREEN);
-        g.drawString(text, x, 50);
+        g.drawString(name, x, 100);
+
+        // Draw a rectangle box
+        g.drawRect(10, 70, getWidth() - 20, 40);
+
+        // Draw the image in the top-left corner
+        if (logo != null) {
+            g.drawImage(logo, 10, 10, this); // x=10, y=10
+        }
     }
 }
-
-   
