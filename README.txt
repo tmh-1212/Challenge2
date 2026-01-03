@@ -1,6 +1,6 @@
 # Java Applet - Bouncing Text
 Project: Chapter2_Challenge_Applet
-Author: [Your Name]
+Author: [TESFAMIKAEL HILU]
 
 ## 1. Security
 
